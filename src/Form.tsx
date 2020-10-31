@@ -19,7 +19,7 @@ const useFormStyles = makeStyles((theme) => ({
   root: {
     "& .MuiTextField-root": {
       margin: theme.spacing(1),
-      width: "25ch",
+      width: "30ch",
     },
   },
 }));
@@ -59,8 +59,9 @@ export default function Form() {
   const [sourceLatitude, setSourceLatitude] = useState<string>("");
   const [sourceLongitude, setSourceLongitude] = useState<string>("");
 
-  const [destinationLatitude, setDestinationLatitude] = useState<string>("");
-  const [destinationLongitude, setDestinationLongitude] = useState<string>("");
+  const [inputList, setInputList] = useState<
+    { latitude: string; longitude: string }[]
+  >([{ latitude: "", longitude: "" }]);
 
   const [data, setData] = useState<Data>();
 
@@ -70,7 +71,13 @@ export default function Form() {
 
   // localhost:8080/routes?src=13.388860,52.517037&dst=13.397634,52.529407&dst=13.428555,52.523219
   const getRoutes = () => {
-    const apiUrl = `http://localhost:8080/routes?src=${sourceLatitude},${sourceLongitude}&dst=${destinationLatitude},${destinationLongitude}`;
+    let destinaions: string = "";
+    inputList.map(
+      (destination: { latitude: string; longitude: string }, index: number) =>
+        (destinaions += `&dst=${destination.latitude},${destination.longitude}`)
+    );
+
+    const apiUrl = `http://localhost:8080/routes?src=${sourceLatitude},${sourceLongitude}${destinaions}`;
     fetch(apiUrl, {
       method: "GET",
     })
@@ -91,18 +98,6 @@ export default function Form() {
     setSourceLongitude(event.target.value);
   };
 
-  const handleDestinationLatitude = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    setDestinationLatitude(event.target.value);
-  };
-
-  const handleDestinationLongitude = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    setDestinationLongitude(event.target.value);
-  };
-
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
@@ -110,13 +105,13 @@ export default function Form() {
     console.log("Longitude:", sourceLongitude, " - Latitude: ", sourceLatitude);
 
     console.log("Destination:");
-    console.log(
-      "Longitude:",
-      destinationLongitude,
-      " - Latitude: ",
-      destinationLatitude
+    inputList.map((dst, index) =>
+      console.log(
+        `Destination: ${index + 1} |  Latitude: ${dst.latitude} - Longitude: ${
+          dst.longitude
+        }`
+      )
     );
-
     getRoutes();
     console.log("data:", data);
   };
@@ -141,6 +136,26 @@ export default function Form() {
   const secondsToMinutes = (seconds: string): string => {
     let minutes = (+seconds / 60).toFixed(2);
     return `${minutes} minutes`;
+  };
+
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    index: number
+  ): void => {
+    const { name, value } = event.target;
+    const list: any = [...inputList];
+    list[index][name] = value;
+    setInputList(list);
+  };
+
+  const handleRemoveClick = (index: number) => {
+    const list = [...inputList];
+    list.splice(index, 1);
+    setInputList(list);
+  };
+
+  const handleAddClick = () => {
+    setInputList([...inputList, { latitude: "", longitude: "" }]);
   };
 
   return (
@@ -176,31 +191,66 @@ export default function Form() {
         />
 
         <hr />
-
         <h2>Enter the destination geographical coordinates</h2>
-        <TextField
-          id="standard-destination-latitude"
-          value={destinationLatitude}
-          type="number"
-          inputProps={latitudeProps}
-          size="small"
-          required
-          onChange={handleDestinationLatitude}
-          label="Latitude"
-          helperText="Example: 50.2649"
-        />
 
-        <TextField
-          id="standard-destination-longitude"
-          value={destinationLongitude}
-          type="number"
-          inputProps={longitudeProps}
-          size="small"
-          required
-          onChange={handleDestinationLongitude}
-          label="Longitude"
-          helperText="Example: 19.0238"
-        />
+        {inputList &&
+          inputList.map((destination, index) => {
+            return (
+              <div key={index * index}>
+                <TextField
+                  id="standard-source-latitude"
+                  value={destination.latitude}
+                  type="number"
+                  size="small"
+                  name="latitude"
+                  inputProps={latitudeProps}
+                  required
+                  onChange={(event) => handleInputChange(event, index)}
+                  label="Latitude"
+                  helperText="Example: 50.2649"
+                />
+
+                <TextField
+                  id="standard-source-longitude"
+                  value={destination.longitude}
+                  type="number"
+                  inputProps={longitudeProps}
+                  size="small"
+                  name="longitude"
+                  required
+                  onChange={(event) => handleInputChange(event, index)}
+                  label="Longitude"
+                  helperText="Example: 19.0238"
+                />
+                <span>
+                  {inputList.length !== 1 && (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => handleRemoveClick(index)}
+                    >
+                      Remove
+                    </Button>
+                  )}
+
+                  <br />
+
+                  {inputList.length - 1 === index && (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleAddClick}
+                    >
+                      Add
+                    </Button>
+                  )}
+                </span>
+              </div>
+            );
+          })}
+        <hr />
+        {JSON.stringify(inputList)}
+        <br />
 
         <div>
           <br />

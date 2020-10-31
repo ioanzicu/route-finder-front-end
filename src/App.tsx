@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.css";
 import Form from "./Form";
+import InputLocation from "./Input";
 import Container from "@material-ui/core/Container";
 
 function App() {
@@ -11,6 +12,8 @@ function App() {
 
         <hr />
         <Form />
+        <hr />
+        <InputLocation />
       </div>
     </Container>
   );

@@ -10,6 +10,10 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import HomeIcon from "@material-ui/icons/Home";
+import FlagIcon from "@material-ui/icons/Flag";
+import TimerIcon from "@material-ui/icons/Timer";
+import LocalShippingIcon from "@material-ui/icons/LocalShipping";
 
 const useFormStyles = makeStyles((theme) => ({
   root: {
@@ -36,6 +40,17 @@ export interface Data {
   source: string;
   routes: Route[];
 }
+
+const mockData = {
+  source: "13.38886,52.517037",
+  routes: [
+    {
+      destination: "13.397634,52.529407",
+      duration: "251.5",
+      distance: "1884.8",
+    },
+  ],
+};
 
 export default function Form() {
   const classesForm = useFormStyles();
@@ -200,21 +215,30 @@ export default function Form() {
       <div>{data && JSON.stringify(data)}</div>
 
       <TableContainer component={Paper}>
-        {data && data.routes && data.routes.length > 0 && (
+        {mockData && mockData.routes && mockData.routes.length > 0 && (
           <Table className={classesTable.table} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Source</TableCell>
-                <TableCell align="right">Destination</TableCell>
-                <TableCell align="right">Duration (seconds)</TableCell>
-                <TableCell align="right">Distance (meters)</TableCell>
+                <TableCell>
+                  Source <HomeIcon />
+                </TableCell>
+                <TableCell align="right">
+                  Destination <FlagIcon />
+                </TableCell>
+                <TableCell align="right">
+                  Duration (seconds) <TimerIcon />
+                </TableCell>
+                <TableCell align="right">
+                  Distance (meters)
+                  <LocalShippingIcon />
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.routes.map((row: Route, index: number) => (
+              {mockData.routes.map((row: Route, index: number) => (
                 <TableRow key={row.destination + index}>
                   <TableCell component="th" scope="row">
-                    {data.source}
+                    {mockData.source}
                   </TableCell>
                   <TableCell align="right">{row.destination}</TableCell>
                   <TableCell align="right">

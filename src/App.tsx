@@ -15,6 +15,7 @@ import {
   createStyles,
   makeStyles,
 } from "@material-ui/core/styles";
+import { ICoordinates } from "./types/CustomTypes";
 
 const StyledTableCell = withStyles((theme: Theme) =>
   createStyles({
@@ -38,18 +39,6 @@ const useTableStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-
-interface ICoordinates {
-  longitude: string;
-  latitude: string;
-  locationLabel: string;
-  country: string;
-  state: string;
-  city: string;
-  street?: string;
-  houseNumber?: string;
-  postalCode: string;
-}
 
 function App() {
   const [coordinates, setCoodinates] = useState<ICoordinates>({

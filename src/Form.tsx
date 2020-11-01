@@ -24,6 +24,7 @@ import AddCircleIcon from "@material-ui/icons/AddCircle";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { Alert, AlertTitle } from "@material-ui/lab";
+import { IRoute, IData } from "./types/CustomTypes";
 
 const useFormStyles = makeStyles((theme) => ({
   root: {
@@ -49,17 +50,6 @@ const StyledTableCell = withStyles((theme: Theme) =>
   })
 )(TableCell);
 
-export interface Route {
-  destination: string;
-  duration: string;
-  distance: string;
-}
-
-export interface Data {
-  source: string;
-  routes: Route[];
-}
-
 const mockData = {
   source: "13.38886,52.517037",
   routes: [
@@ -82,7 +72,7 @@ export default function Form() {
     { latitude: string; longitude: string }[]
   >([{ latitude: "", longitude: "" }]);
 
-  const [data, setData] = useState<Data>();
+  const [data, setData] = useState<IData>();
 
   const [fetchError, setFetchError] = useState<string>("");
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
@@ -334,7 +324,7 @@ export default function Form() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {mockData.routes.map((row: Route, index: number) => (
+              {mockData.routes.map((row: IRoute, index: number) => (
                 <TableRow key={row.destination + index}>
                   <TableCell>{index + 1}.</TableCell>
                   <TableCell component="th" scope="row">

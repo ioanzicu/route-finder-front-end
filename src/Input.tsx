@@ -4,74 +4,9 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { Alert, AlertTitle } from "@material-ui/lab";
-
+import LocationSearchingIcon from "@material-ui/icons/LocationSearching";
 import { FormControl } from "@material-ui/core";
-
-export interface IGeocode {
-  Response: Response;
-}
-
-export interface Response {
-  MetaInfo: MetaInfo;
-  View: View[];
-}
-
-export interface MetaInfo {
-  Timestamp: string;
-}
-
-export interface View {
-  _type: string;
-  ViewId: number;
-  Result: Result[];
-}
-
-export interface Result {
-  Relevance: number;
-  MatchLevel: string;
-  MatchQuality: MatchQuality;
-  Location: Location;
-}
-
-export interface Location {
-  LocationId: string;
-  LocationType: string;
-  DisplayPosition: DisplayPosition;
-  NavigationPosition: DisplayPosition[];
-  MapView: MapView;
-  Address: Address;
-}
-
-export interface Address {
-  Label: string;
-  Country: string;
-  State: string;
-  County: string;
-  City: string;
-  Street?: string;
-  HouseNumber?: string;
-  PostalCode: string;
-  AdditionalData: AdditionalDatum[];
-}
-
-export interface AdditionalDatum {
-  value: string;
-  key: string;
-}
-
-export interface DisplayPosition {
-  Latitude: number;
-  Longitude: number;
-}
-
-export interface MapView {
-  TopLeft: DisplayPosition;
-  BottomRight: DisplayPosition;
-}
-
-export interface MatchQuality {
-  City: number;
-}
+import { IGeocode } from "./types/CustomTypes";
 
 const InputLocation = memo((_props: any) => {
   // get input data from the custom hook
@@ -82,7 +17,7 @@ const InputLocation = memo((_props: any) => {
   const [error, setError] = useState<any>("");
 
   // HEREMAP Geocoder API for getting the geographical coordination by the name of the location
-  const url = `https://geocoder.ls.hereapi.com/6.2/geocode.json?apiKey=${process.env.REACT_APP_HEREMAP_GEOCODE_API}&searchtext=${value}`;
+  const url: string = `https://geocoder.ls.hereapi.com/6.2/geocode.json?apiKey=${process.env.REACT_APP_HEREMAP_GEOCODE_API}&searchtext=${value}`;
 
   const fetchData = async (url: string) => {
     try {
@@ -124,7 +59,8 @@ const InputLocation = memo((_props: any) => {
     results.Response &&
     results.Response.View[0].Result[0].Location.DisplayPosition.Latitude &&
     results.Response.View[0].Result[0].Location.DisplayPosition.Longitude &&
-    results.Response.View[0].Result[0].Location.Address.Label
+    results.Response.View[0].Result[0].Location.Address.Label &&
+    results.Response.View[0].Result[0].Location.Address.Country
   ) {
     _props.setCoodinates({
       longitude:
@@ -166,8 +102,10 @@ const InputLocation = memo((_props: any) => {
           helperText="Enter Name of the City/Vilage"
           {...bind}
         />
+        <span style={{ padding: "15px" }}></span>
         <Button variant="contained" type="submit" color="primary">
-          <i className="fas fa-search-location pr-3"></i> Search Location
+          <LocationSearchingIcon style={{ paddingRight: "4px" }} /> Search
+          Location
         </Button>
       </form>
 

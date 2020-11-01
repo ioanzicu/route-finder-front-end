@@ -12,9 +12,9 @@ const InputLocation = memo((_props: any) => {
   // get input data from the custom hook
   const { value, bind, reset } = useInput("");
   // fetch parameters: load, success, fail
-  const [loading, setLoading] = useState<boolean>(false);
   const [results, setResults] = useState<IGeocode>();
-  const [error, setError] = useState<any>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [fetchError, setFetchError] = useState<string>("");
 
   // HEREMAP Geocoder API for getting the geographical coordination by the name of the location
   const url: string = `https://geocoder.ls.hereapi.com/6.2/geocode.json?apiKey=${process.env.REACT_APP_HEREMAP_GEOCODE_API}&searchtext=${value}`;
@@ -33,7 +33,7 @@ const InputLocation = memo((_props: any) => {
     } catch (error) {
       // fail
       setLoading(false);
-      setError(error.message);
+      setFetchError(error.message);
     }
 
     setLoading(false);
@@ -84,11 +84,11 @@ const InputLocation = memo((_props: any) => {
   // if request is loading -> show spinner
   if (loading) return <CircularProgress />;
   // if an error occur -> show alert message
-  if (error) {
+  if (fetchError) {
     return (
       <Alert severity="error">
         <AlertTitle>Error</AlertTitle>
-        Something went wrong: <strong>{error}.</strong>
+        Something went wrong: <strong>{fetchError}.</strong>
       </Alert>
     );
   }

@@ -50,12 +50,35 @@ export default function Form() {
 
   const [data, setData] = useState<IData>();
 
+  const [loading, setLoading] = useState<boolean>(false);
   const [fetchError, setFetchError] = useState<string>("");
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
   useEffect(() => {
     console.log("Data is loaded");
   }, [data]);
+
+  const fetchData = async (url: string) => {
+    try {
+      // request data
+      setLoading(true);
+      const data = await fetch(url, {
+        method: "GET",
+      });
+      const json = await data.json();
+      // success
+      if (json) {
+        setLoading(false);
+        setData(json);
+      }
+    } catch (error) {
+      // fail
+      setLoading(false);
+      setFetchError(error.message);
+      console.log("Error to fetch: ", error.message);
+    }
+
+    setLoading(false);
+  };
 
   // localhost:8080/routes?src=13.388860,52.517037&dst=13.397634,52.529407&dst=13.428555,52.523219
   const getRoutes = () => {
@@ -68,20 +91,8 @@ export default function Form() {
     // String of format {longitude},{latitude}
     // http://project-osrm.org/docs/v5.23.0/api/#general-options
     const apiUrl = `http://localhost:8080/routes?src=${sourceLongitude},${sourceLatitude}${destinaions}`;
-    setIsLoaded(true);
-    fetch(apiUrl, {
-      method: "GET",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setData(data);
-        setIsLoaded(false);
-      })
-      .catch((error) => {
-        setIsLoaded(false);
-        setFetchError(error.message);
-        console.log("Error to fetch: ", error.message);
-      });
+
+    fetchData(apiUrl);
   };
 
   const handleSourceLatitude = (
@@ -110,6 +121,12 @@ export default function Form() {
         }`
       )
     );
+
+    // Empty the input fields
+    setSourceLatitude("");
+    setSourceLongitude("");
+    setInputList([{ latitude: "", longitude: "" }]);
+
     getRoutes();
     console.log("data:", data);
   };
@@ -147,7 +164,15 @@ export default function Form() {
   };
 
   // if request is loading -> show spinner
-  if (isLoaded) return <CircularProgress />;
+  if (loading) return <CircularProgress />;
+
+  // Set timeout to remove the error banner after 5 seconds
+  if (fetchError) {
+    setTimeout(() => {
+      setFetchError("");
+      console.log("Timeout: Remove the error");
+    }, 5000);
+  }
 
   return (
     <div>

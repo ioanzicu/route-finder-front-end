@@ -124,13 +124,13 @@ const InputLocation = memo((_props: any) => {
     results.Response.View[0].Result[0].Location.DisplayPosition.Longitude &&
     results.Response.View[0].Result[0].Location.Address.Label
   ) {
-    // _props.setCoodinates({
-    //   longitude:
-    //     results.Response.View[0].Result[0].Location.DisplayPosition.Longitude,
-    //   latitude:
-    //     results.Response.View[0].Result[0].Location.DisplayPosition.Latitude,
-    //   locationName: results.Response.View[0].Result[0].Location.Address.Label,
-    // });
+    _props.setCoodinates({
+      longitude:
+        results.Response.View[0].Result[0].Location.DisplayPosition.Longitude,
+      latitude:
+        results.Response.View[0].Result[0].Location.DisplayPosition.Latitude,
+      locationName: results.Response.View[0].Result[0].Location.Address.Label,
+    });
 
     console.log("Result:", results);
   }
@@ -160,6 +160,8 @@ const InputLocation = memo((_props: any) => {
           <i className="fas fa-search-location pr-3"></i> Search Location
         </Button>
       </form>
+
+      {results && JSON.stringify(results)}
     </FormControl>
   );
 });

@@ -96,10 +96,12 @@ export default function Form() {
     let destinaions: string = "";
     inputList.map(
       (destination: { latitude: string; longitude: string }, index: number) =>
-        (destinaions += `&dst=${destination.latitude},${destination.longitude}`)
+        (destinaions += `&dst=${destination.longitude},${destination.latitude}`)
     );
 
-    const apiUrl = `http://localhost:8080/routes?src=${sourceLatitude},${sourceLongitude}${destinaions}`;
+    // String of format {longitude},{latitude}
+    // http://project-osrm.org/docs/v5.23.0/api/#general-options
+    const apiUrl = `http://localhost:8080/routes?src=${sourceLongitude},${sourceLatitude}${destinaions}`;
     setIsLoaded(true);
     fetch(apiUrl, {
       method: "GET",
@@ -212,18 +214,6 @@ export default function Form() {
         )}
 
         <TextField
-          id="standard-source-latitude"
-          value={sourceLatitude}
-          type="number"
-          size="small"
-          inputProps={latitudeProps}
-          required
-          onChange={handleSourceLatitude}
-          label="Latitude"
-          helperText="Example: 50.2649"
-        />
-
-        <TextField
           id="standard-source-longitude"
           value={sourceLongitude}
           type="number"
@@ -235,6 +225,18 @@ export default function Form() {
           helperText="Example: 19.0238"
         />
 
+        <TextField
+          id="standard-source-latitude"
+          value={sourceLatitude}
+          type="number"
+          size="small"
+          inputProps={latitudeProps}
+          required
+          onChange={handleSourceLatitude}
+          label="Latitude"
+          helperText="Example: 50.2649"
+        />
+
         <hr />
         <h2>Enter the destination geographical coordinates</h2>
 
@@ -242,19 +244,6 @@ export default function Form() {
           inputList.map((destination, index) => {
             return (
               <div key={index * index}>
-                <TextField
-                  id="standard-source-latitude"
-                  value={destination.latitude}
-                  type="number"
-                  size="small"
-                  name="latitude"
-                  inputProps={latitudeProps}
-                  required
-                  onChange={(event) => handleInputChange(event, index)}
-                  label="Latitude"
-                  helperText="Example: 50.2649"
-                />
-
                 <TextField
                   id="standard-source-longitude"
                   value={destination.longitude}
@@ -266,6 +255,19 @@ export default function Form() {
                   onChange={(event) => handleInputChange(event, index)}
                   label="Longitude"
                   helperText="Example: 19.0238"
+                />
+
+                <TextField
+                  id="standard-source-latitude"
+                  value={destination.latitude}
+                  type="number"
+                  size="small"
+                  name="latitude"
+                  inputProps={latitudeProps}
+                  required
+                  onChange={(event) => handleInputChange(event, index)}
+                  label="Latitude"
+                  helperText="Example: 50.2649"
                 />
                 <span>
                   {inputList.length !== 1 && (
@@ -337,9 +339,9 @@ export default function Form() {
                   <TableCell>{index + 1}.</TableCell>
                   <TableCell component="th" scope="row">
                     {/* {data.source} */}
-                    <b>Latitude:</b>
-                    <br />
                     <b>Longitude:</b>
+                    <br />
+                    <b>Latitude:</b>
                   </TableCell>
                   <TableCell>
                     {mockData.source.split(",")[0]}
@@ -347,9 +349,9 @@ export default function Form() {
                     {mockData.source.split(",")[1]}
                   </TableCell>
                   <TableCell>
-                    <b>Latitude:</b>
-                    <br />
                     <b>Longitude:</b>
+                    <br />
+                    <b>Latitude:</b>
                   </TableCell>
                   <TableCell>
                     {row.destination.split(",")[0]}

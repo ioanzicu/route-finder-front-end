@@ -14,6 +14,8 @@ import HomeIcon from "@material-ui/icons/Home";
 import FlagIcon from "@material-ui/icons/Flag";
 import TimerIcon from "@material-ui/icons/Timer";
 import LocalShippingIcon from "@material-ui/icons/LocalShipping";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { Alert, AlertTitle } from "@material-ui/lab";
 
 const useFormStyles = makeStyles((theme) => ({
   root: {
@@ -65,6 +67,9 @@ export default function Form() {
 
   const [data, setData] = useState<Data>();
 
+  const [fetchError, setFetchError] = useState<string>("");
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+
   useEffect(() => {
     console.log("Data is loaded");
   }, [data]);
@@ -78,12 +83,20 @@ export default function Form() {
     );
 
     const apiUrl = `http://localhost:8080/routes?src=${sourceLatitude},${sourceLongitude}${destinaions}`;
+    setIsLoaded(true);
     fetch(apiUrl, {
       method: "GET",
     })
       .then((response) => response.json())
-      .then((data) => setData(data))
-      .catch((er) => console.log("Error to fetch: ", er));
+      .then((data) => {
+        setData(data);
+        setIsLoaded(false);
+      })
+      .catch((error) => {
+        setIsLoaded(false);
+        setFetchError(error.message);
+        console.log("Error to fetch: ", error.message);
+      });
   };
 
   const handleSourceLatitude = (
@@ -158,6 +171,10 @@ export default function Form() {
     setInputList([...inputList, { latitude: "", longitude: "" }]);
   };
 
+  // if request is loading -> show spinner
+  if (isLoaded) return <CircularProgress />;
+  // if an error occur -> show alert message
+
   return (
     <div>
       <h2>Enter the home geographical coordinates</h2>
@@ -166,6 +183,13 @@ export default function Form() {
         onSubmit={handleSubmit}
         autoComplete="off"
       >
+        {fetchError && (
+          <Alert severity="error">
+            <AlertTitle>Error</AlertTitle>
+            Something went wrong: <strong>{fetchError}.</strong>
+          </Alert>
+        )}
+
         <TextField
           id="standard-source-latitude"
           value={sourceLatitude}
@@ -265,7 +289,7 @@ export default function Form() {
       <div>{data && JSON.stringify(data)}</div>
 
       <TableContainer component={Paper}>
-        {mockData && mockData.routes && mockData.routes.length > 0 && (
+        {data && data.routes && data.routes.length > 0 && (
           <Table className={classesTable.table} aria-label="simple table">
             <TableHead>
               <TableRow>
@@ -285,10 +309,10 @@ export default function Form() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {mockData.routes.map((row: Route, index: number) => (
+              {data.routes.map((row: Route, index: number) => (
                 <TableRow key={row.destination + index}>
                   <TableCell component="th" scope="row">
-                    {mockData.source}
+                    {data.source}
                   </TableCell>
                   <TableCell align="right">{row.destination}</TableCell>
                   <TableCell align="right">

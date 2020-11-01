@@ -15,10 +15,13 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import IconButton from "@material-ui/core/IconButton";
 import HomeIcon from "@material-ui/icons/Home";
 import FlagIcon from "@material-ui/icons/Flag";
 import TimerIcon from "@material-ui/icons/Timer";
 import LocalShippingIcon from "@material-ui/icons/LocalShipping";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { Alert, AlertTitle } from "@material-ui/lab";
 
@@ -266,25 +269,25 @@ export default function Form() {
                 />
                 <span>
                   {inputList.length !== 1 && (
-                    <Button
-                      variant="contained"
-                      color="primary"
+                    <IconButton
+                      style={{ color: "red" }}
+                      aria-label="Remove destination"
                       onClick={() => handleRemoveClick(index)}
                     >
-                      Remove
-                    </Button>
+                      <DeleteForeverIcon fontSize="large" />
+                    </IconButton>
                   )}
 
                   <br />
 
                   {inputList.length - 1 === index && (
-                    <Button
-                      variant="contained"
+                    <IconButton
                       color="primary"
+                      aria-label="Add new destination"
                       onClick={handleAddClick}
                     >
-                      Add
-                    </Button>
+                      <AddCircleIcon fontSize="large" />
+                    </IconButton>
                   )}
                 </span>
               </div>

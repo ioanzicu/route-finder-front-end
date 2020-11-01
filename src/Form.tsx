@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/core/styles";
+import {
+  withStyles,
+  Theme,
+  createStyles,
+  makeStyles,
+} from "@material-ui/core/styles";
 
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -31,6 +36,15 @@ const useTableStyles = makeStyles({
     minWidth: 650,
   },
 });
+
+const StyledTableCell = withStyles((theme: Theme) =>
+  createStyles({
+    head: {
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.common.white,
+    },
+  })
+)(TableCell);
 
 export interface Route {
   destination: string;
@@ -173,7 +187,6 @@ export default function Form() {
 
   // if request is loading -> show spinner
   if (isLoaded) return <CircularProgress />;
-  // if an error occur -> show alert message
 
   return (
     <div>
@@ -183,11 +196,16 @@ export default function Form() {
         onSubmit={handleSubmit}
         autoComplete="off"
       >
+        {/* // if an error occur -> show alert message */}
         {fetchError && (
-          <Alert severity="error">
-            <AlertTitle>Error</AlertTitle>
-            Something went wrong: <strong>{fetchError}.</strong>
-          </Alert>
+          <div
+            style={{ width: "300px", marginLeft: "auto", marginRight: "auto" }}
+          >
+            <Alert severity="error">
+              <AlertTitle>Error</AlertTitle>
+              Something went wrong: <strong>{fetchError}.</strong>
+            </Alert>
+          </div>
         )}
 
         <TextField
@@ -289,37 +307,61 @@ export default function Form() {
       <div>{data && JSON.stringify(data)}</div>
 
       <TableContainer component={Paper}>
-        {data && data.routes && data.routes.length > 0 && (
+        {mockData && mockData.routes && mockData.routes.length > 0 && (
           <Table className={classesTable.table} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>
+                <StyledTableCell>Nr</StyledTableCell>
+                <StyledTableCell colSpan={2} align="center">
                   Source <HomeIcon />
-                </TableCell>
-                <TableCell align="right">
+                </StyledTableCell>
+                <StyledTableCell colSpan={2} align="center">
                   Destination <FlagIcon />
-                </TableCell>
-                <TableCell align="right">
-                  Duration (seconds) <TimerIcon />
-                </TableCell>
-                <TableCell align="right">
-                  Distance (meters)
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  Duration
+                  <TimerIcon />
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  Distance
                   <LocalShippingIcon />
-                </TableCell>
+                </StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.routes.map((row: Route, index: number) => (
+              {mockData.routes.map((row: Route, index: number) => (
                 <TableRow key={row.destination + index}>
+                  <TableCell>{index + 1}.</TableCell>
                   <TableCell component="th" scope="row">
-                    {data.source}
+                    {/* {data.source} */}
+                    <b>Latitude:</b>
+                    <br />
+                    <b>Longitude:</b>
                   </TableCell>
-                  <TableCell align="right">{row.destination}</TableCell>
-                  <TableCell align="right">
-                    {row.duration} seconds | {secondsToMinutes(row.duration)}
+                  <TableCell>
+                    {mockData.source.split(",")[0]}
+                    <br />
+                    {mockData.source.split(",")[1]}
                   </TableCell>
-                  <TableCell align="right">
-                    {row.distance} meters | {metersToKm(row.distance)}
+                  <TableCell>
+                    <b>Latitude:</b>
+                    <br />
+                    <b>Longitude:</b>
+                  </TableCell>
+                  <TableCell>
+                    {row.destination.split(",")[0]}
+                    <br />
+                    {row.destination.split(",")[1]}
+                  </TableCell>
+                  <TableCell align="center">
+                    {row.duration} seconds
+                    <br />
+                    {secondsToMinutes(row.duration)}
+                  </TableCell>
+                  <TableCell align="center">
+                    {row.distance} meters
+                    <br />
+                    {metersToKm(row.distance)}
                   </TableCell>
                 </TableRow>
               ))}

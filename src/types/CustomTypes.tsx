@@ -84,5 +84,10 @@ export interface IRoute {
 
 export interface IData {
   source: string;
-  routes: Route[];
+  routes: IRoute[];
+}
+
+export interface InputList {
+  latitude: string;
+  longitude: string;
 }

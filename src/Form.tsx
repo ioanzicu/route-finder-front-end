@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import {
-  withStyles,
-  Theme,
-  createStyles,
-  makeStyles,
-} from "@material-ui/core/styles";
 
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -24,31 +18,12 @@ import AddCircleIcon from "@material-ui/icons/AddCircle";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { Alert, AlertTitle } from "@material-ui/lab";
-import { IRoute, IData } from "./types/CustomTypes";
-
-const useFormStyles = makeStyles((theme) => ({
-  root: {
-    "& .MuiTextField-root": {
-      margin: theme.spacing(1),
-      width: "30ch",
-    },
-  },
-}));
-
-const useTableStyles = makeStyles({
-  table: {
-    minWidth: 650,
-  },
-});
-
-const StyledTableCell = withStyles((theme: Theme) =>
-  createStyles({
-    head: {
-      backgroundColor: theme.palette.primary.main,
-      color: theme.palette.common.white,
-    },
-  })
-)(TableCell);
+import { IRoute, IData, InputList } from "./types/CustomTypes";
+import {
+  StyledTableCell,
+  useFormStyles,
+  useTableStyles,
+} from "./styles/CustomStyles";
 
 const mockData = {
   source: "13.38886,52.517037",
@@ -68,9 +43,9 @@ export default function Form() {
   const [sourceLatitude, setSourceLatitude] = useState<string>("");
   const [sourceLongitude, setSourceLongitude] = useState<string>("");
 
-  const [inputList, setInputList] = useState<
-    { latitude: string; longitude: string }[]
-  >([{ latitude: "", longitude: "" }]);
+  const [inputList, setInputList] = useState<InputList[]>([
+    { latitude: "", longitude: "" },
+  ]);
 
   const [data, setData] = useState<IData>();
 
@@ -85,7 +60,7 @@ export default function Form() {
   const getRoutes = () => {
     let destinaions: string = "";
     inputList.map(
-      (destination: { latitude: string; longitude: string }, index: number) =>
+      (destination: InputList, index: number) =>
         (destinaions += `&dst=${destination.longitude},${destination.latitude}`)
     );
 

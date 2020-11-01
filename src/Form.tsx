@@ -24,6 +24,7 @@ import {
   useFormStyles,
   useTableStyles,
 } from "./styles/CustomStyles";
+import { metersToKm, secondsToMinutes } from "./utils/Utils";
 
 const mockData = {
   source: "13.38886,52.517037",
@@ -123,16 +124,6 @@ export default function Form() {
     step: 0.000001,
     max: 180,
     min: -180,
-  };
-
-  const metersToKm = (meters: string): string => {
-    let km = (+meters / 1000).toFixed(2);
-    return `${km} kilometers`;
-  };
-
-  const secondsToMinutes = (seconds: string): string => {
-    let minutes = (+seconds / 60).toFixed(2);
-    return `${minutes} minutes`;
   };
 
   const handleInputChange = (

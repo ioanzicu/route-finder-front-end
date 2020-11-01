@@ -129,7 +129,12 @@ const InputLocation = memo((_props: any) => {
         results.Response.View[0].Result[0].Location.DisplayPosition.Longitude,
       latitude:
         results.Response.View[0].Result[0].Location.DisplayPosition.Latitude,
-      locationName: results.Response.View[0].Result[0].Location.Address.Label,
+      locationLabel: results.Response.View[0].Result[0].Location.Address.Label,
+      country: results.Response.View[0].Result[0].Location.Address.Country,
+      state: results.Response.View[0].Result[0].Location.Address.State,
+      city: results.Response.View[0].Result[0].Location.Address.City,
+      postalCode:
+        results.Response.View[0].Result[0].Location.Address.PostalCode,
     });
 
     console.log("Result:", results);

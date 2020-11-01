@@ -48,6 +48,8 @@ export interface Address {
   State: string;
   County: string;
   City: string;
+  Street?: string;
+  HouseNumber?: string;
   PostalCode: string;
   AdditionalData: AdditionalDatum[];
 }
@@ -133,6 +135,9 @@ const InputLocation = memo((_props: any) => {
       country: results.Response.View[0].Result[0].Location.Address.Country,
       state: results.Response.View[0].Result[0].Location.Address.State,
       city: results.Response.View[0].Result[0].Location.Address.City,
+      street: results.Response.View[0].Result[0].Location.Address.Street,
+      houseNumber:
+        results.Response.View[0].Result[0].Location.Address.HouseNumber,
       postalCode:
         results.Response.View[0].Result[0].Location.Address.PostalCode,
     });

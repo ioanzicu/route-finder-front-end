@@ -39,22 +39,28 @@ const useTableStyles = makeStyles((theme: Theme) =>
   })
 );
 
+interface ICoordinates {
+  longitude: string;
+  latitude: string;
+  locationLabel: string;
+  country: string;
+  state: string;
+  city: string;
+  street?: string;
+  houseNumber?: string;
+  postalCode: string;
+}
+
 function App() {
-  const [coordinates, setCoodinates] = useState<{
-    longitude: string;
-    latitude: string;
-    locationLabel: string;
-    country: string;
-    state: string;
-    city: string;
-    postalCode: string;
-  }>({
+  const [coordinates, setCoodinates] = useState<ICoordinates>({
     longitude: "",
     latitude: "",
     locationLabel: "",
     country: "",
     state: "",
     city: "",
+    street: "",
+    houseNumber: "",
     postalCode: "",
   });
 
@@ -69,6 +75,8 @@ function App() {
     country: "POL",
     state: "Woj. Kujawsko-Pomorskie",
     city: "Bydgoszcz",
+    street: "Some Street",
+    houseNumber: "23",
     postalCode: "85-023",
   };
 
@@ -126,6 +134,18 @@ function App() {
                 <TableRow>
                   <TableCell>City:</TableCell>
                   <TableCell> {mockData.city}</TableCell>
+                </TableRow>
+              )}
+              {mockData.street && (
+                <TableRow>
+                  <TableCell>Street:</TableCell>
+                  <TableCell> {mockData.street}</TableCell>
+                </TableRow>
+              )}
+              {mockData.houseNumber && (
+                <TableRow>
+                  <TableCell>House Number:</TableCell>
+                  <TableCell> {mockData.houseNumber}</TableCell>
                 </TableRow>
               )}
               {mockData.postalCode && (

@@ -10,10 +10,10 @@ import Typography from "@material-ui/core/Typography";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 
-import RouteImage from "./images/route.png";
 import SeachByLocation from "./components/SearchByLocation";
 import Form from "./components/Form";
 import "./App.css";
+import Landing from "./components/Landing";
 import About from "./components/About";
 import Footer from "./components/Footer";
 
@@ -66,13 +66,7 @@ function App() {
       <div className="App">
         <Switch>
           <Route path="/about">
-            <div
-              style={{
-                height: "78vh",
-              }}
-            >
-              <About />
-            </div>
+            <About />
           </Route>
           <Route path="/route">
             <Container maxWidth="md">
@@ -80,16 +74,8 @@ function App() {
               <SeachByLocation />
             </Container>
           </Route>
-
           <Route path="/">
-            <div
-              style={{
-                backgroundImage: `url(${RouteImage})`,
-                backgroundRepeat: "no-repeat",
-                backgroundSize: "cover",
-                height: "78vh",
-              }}
-            ></div>
+            <Landing />
           </Route>
         </Switch>
         <Footer />

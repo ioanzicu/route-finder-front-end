@@ -1,13 +1,13 @@
 import React from "react";
 import Container from "@material-ui/core/Container";
 import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
 import LocalShippingIcon from "@material-ui/icons/LocalShipping";
 
 import SeachByLocation from "./components/SearchByLocation";
 import Form from "./components/Form";
 import "./App.css";
+import About from "./components/About";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -22,20 +22,24 @@ function App() {
         </h1>
       </AppBar>
 
+      <br />
+
+      <br />
+      <br />
+      <About />
+
+      <br />
+      <br />
+      <br />
+
       <Container maxWidth="md">
         <br />
         <Form />
         <hr />
         <SeachByLocation />
       </Container>
-
-      <AppBar position="static" color="primary">
-        <Toolbar>
-          <Typography variant="body1" color="inherit">
-            &copy; 2020
-          </Typography>
-        </Toolbar>
-      </AppBar>
+      <br />
+      <Footer />
     </div>
   );
 }

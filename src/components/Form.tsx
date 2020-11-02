@@ -297,18 +297,17 @@ export default function Form() {
               <TableRow>
                 <StyledTableCell>Nr</StyledTableCell>
                 <StyledTableCell colSpan={2} align="center">
-                  Source <HomeIcon />
+                  Source <HomeIcon style={{ marginBottom: "-5px" }} />
                 </StyledTableCell>
                 <StyledTableCell colSpan={2} align="center">
-                  Destination <FlagIcon />
+                  Destination <FlagIcon style={{ marginBottom: "-5px" }} />
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  Duration
-                  <TimerIcon />
+                  Duration <TimerIcon style={{ marginBottom: "-5px" }} />
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  Distance
-                  <LocalShippingIcon />
+                  Distance{" "}
+                  <LocalShippingIcon style={{ marginBottom: "-5px" }} />
                 </StyledTableCell>
               </TableRow>
             </TableHead>

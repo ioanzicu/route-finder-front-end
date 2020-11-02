@@ -26,6 +26,8 @@ export const StyledTableCell = withStyles((theme: Theme) =>
     head: {
       backgroundColor: theme.palette.primary.main,
       color: theme.palette.common.white,
+      fontSize: "1rem",
+      fontWeight: "bold",
     },
   })
 )(TableCell);

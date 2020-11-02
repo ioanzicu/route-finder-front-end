@@ -17,7 +17,7 @@ const Footer = () => (
         </a>
         API.
         <br />
-        All rights reserved. &copy; {new Date().getFullYear()}
+        All rights reserved &copy; {new Date().getFullYear()}.
       </Typography>
     </Toolbar>
   </AppBar>

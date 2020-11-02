@@ -6,7 +6,7 @@ import Typography from "@material-ui/core/Typography";
 const Footer = () => (
   <AppBar position="static" color="primary">
     <Toolbar
-      style={{ marginLeft: "auto", marginRight: "auto", padding: "1rem" }}
+      style={{ marginLeft: "auto", marginRight: "auto", padding: "0.6rem" }}
     >
       <Typography variant="body1" color="inherit">
         Project is powered by{" "}

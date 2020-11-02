@@ -1,4 +1,4 @@
-import React, { useState, memo } from "react";
+import React, { useState, useEffect, memo } from "react";
 import useInput from "./hoc/InputHook";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -54,32 +54,36 @@ const InputLocation = memo((_props: any) => {
 
   // if there is a result set the coordinates wich will be passed to the parent component
   // because they are required for the Dashboard component
-  if (
-    results &&
-    results.Response &&
-    results.Response.View[0].Result[0].Location.DisplayPosition.Latitude &&
-    results.Response.View[0].Result[0].Location.DisplayPosition.Longitude &&
-    results.Response.View[0].Result[0].Location.Address.Label &&
-    results.Response.View[0].Result[0].Location.Address.Country
-  ) {
-    _props.setCoodinates({
-      longitude:
-        results.Response.View[0].Result[0].Location.DisplayPosition.Longitude,
-      latitude:
-        results.Response.View[0].Result[0].Location.DisplayPosition.Latitude,
-      locationLabel: results.Response.View[0].Result[0].Location.Address.Label,
-      country: results.Response.View[0].Result[0].Location.Address.Country,
-      state: results.Response.View[0].Result[0].Location.Address.State,
-      city: results.Response.View[0].Result[0].Location.Address.City,
-      street: results.Response.View[0].Result[0].Location.Address.Street,
-      houseNumber:
-        results.Response.View[0].Result[0].Location.Address.HouseNumber,
-      postalCode:
-        results.Response.View[0].Result[0].Location.Address.PostalCode,
-    });
 
-    console.log("Result:", results);
-  }
+  useEffect(() => {
+    if (
+      results &&
+      results.Response &&
+      results.Response.View[0].Result[0].Location.DisplayPosition.Latitude &&
+      results.Response.View[0].Result[0].Location.DisplayPosition.Longitude &&
+      results.Response.View[0].Result[0].Location.Address.Label &&
+      results.Response.View[0].Result[0].Location.Address.Country
+    ) {
+      _props.setCoodinates({
+        longitude:
+          results.Response.View[0].Result[0].Location.DisplayPosition.Longitude,
+        latitude:
+          results.Response.View[0].Result[0].Location.DisplayPosition.Latitude,
+        locationLabel:
+          results.Response.View[0].Result[0].Location.Address.Label,
+        country: results.Response.View[0].Result[0].Location.Address.Country,
+        state: results.Response.View[0].Result[0].Location.Address.State,
+        city: results.Response.View[0].Result[0].Location.Address.City,
+        street: results.Response.View[0].Result[0].Location.Address.Street,
+        houseNumber:
+          results.Response.View[0].Result[0].Location.Address.HouseNumber,
+        postalCode:
+          results.Response.View[0].Result[0].Location.Address.PostalCode,
+      });
+
+      console.log("Result:", results);
+    }
+  });
 
   // if request is loading -> show spinner
   if (loading) return <CircularProgress />;
@@ -104,12 +108,10 @@ const InputLocation = memo((_props: any) => {
         />
         <span style={{ padding: "15px" }}></span>
         <Button variant="contained" type="submit" color="primary">
-          <LocationSearchingIcon style={{ paddingRight: "4px" }} /> Search
-          Location
+          <LocationSearchingIcon style={{ paddingRight: "4px" }} />
+          Search Location
         </Button>
       </form>
-
-      {results && JSON.stringify(results)}
     </FormControl>
   );
 });

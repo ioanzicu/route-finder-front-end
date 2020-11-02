@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -277,8 +276,6 @@ export default function Form() {
             );
           })}
         <hr />
-        {JSON.stringify(inputList)}
-        <br />
 
         <div>
           <br />

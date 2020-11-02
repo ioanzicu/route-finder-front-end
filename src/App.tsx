@@ -1,8 +1,8 @@
 import React from "react";
 import "./App.css";
-import Form from "./Form";
+import Form from "./components/Form";
 import Container from "@material-ui/core/Container";
-import SeachByLocation from "./SearchByLocation";
+import SeachByLocation from "./components/SearchByLocation";
 
 function App() {
   return (

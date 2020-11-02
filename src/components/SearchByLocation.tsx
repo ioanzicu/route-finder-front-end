@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import InputLocation from "./Input";
-import { ICoordinates } from "./types/CustomTypes";
+import { ICoordinates } from "../types/CustomTypes";
 import LocationDataTable from "./LocationDataTable";
 
 const SearchByLocation = () => {

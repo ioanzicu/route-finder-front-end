@@ -17,13 +17,14 @@ import AddCircleIcon from "@material-ui/icons/AddCircle";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { Alert, AlertTitle } from "@material-ui/lab";
-import { IRoute, IData, InputList } from "./types/CustomTypes";
+
 import {
   StyledTableCell,
   useFormStyles,
   useTableStyles,
-} from "./styles/CustomStyles";
-import { metersToKm, secondsToMinutes } from "./utils/Utils";
+} from "../styles/CustomStyles";
+import { metersToKm, secondsToMinutes } from "../utils/Utils";
+import { IRoute, IData, InputList } from "../types/CustomTypes";
 
 const mockData = {
   source: "13.38886,52.517037",

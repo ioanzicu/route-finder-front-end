@@ -1,5 +1,4 @@
 import React from "react";
-import { ICoordinates } from "./types/CustomTypes";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
 import TableContainer from "@material-ui/core/TableContainer";
@@ -7,8 +6,10 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
-import { StyledTableCell } from "./styles/CustomStyles";
 import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
+
+import { StyledTableCell } from "../styles/CustomStyles";
+import { ICoordinates } from "../types/CustomTypes";
 
 const useTableStyles = makeStyles((theme: Theme) =>
   createStyles({

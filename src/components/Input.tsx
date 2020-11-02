@@ -1,12 +1,13 @@
 import React, { useState, useEffect, memo } from "react";
-import useInput from "./hoc/InputHook";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { Alert, AlertTitle } from "@material-ui/lab";
 import LocationSearchingIcon from "@material-ui/icons/LocationSearching";
 import { FormControl } from "@material-ui/core";
-import { IGeocode } from "./types/CustomTypes";
+
+import useInput from "../hoc/InputHook";
+import { IGeocode } from "../types/CustomTypes";
 
 const InputLocation = memo((_props: any) => {
   // get input data from the custom hook

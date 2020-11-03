@@ -163,9 +163,6 @@ export default function Form() {
     setInputList([...inputList, { latitude: "", longitude: "" }]);
   };
 
-  // if request is loading -> show spinner
-  if (loading) return <CircularProgress />;
-
   // Set timeout to remove the error banner after 5 seconds
   if (fetchError) {
     setTimeout(() => {
@@ -184,14 +181,14 @@ export default function Form() {
       >
         {/* // if an error occur -> show alert message */}
         {fetchError && (
-          <div
-            style={{ width: "300px", marginLeft: "auto", marginRight: "auto" }}
-          >
-            <Alert severity="error">
-              <AlertTitle>Error</AlertTitle>
-              Something went wrong: <strong>{fetchError}.</strong>
-            </Alert>
-          </div>
+          <Alert severity="error">
+            <AlertTitle>
+              <strong style={{ fontSize: "1rem", textAlign: "center" }}>
+                Error:
+              </strong>
+            </AlertTitle>
+            {fetchError}
+          </Alert>
         )}
 
         <TextField
@@ -290,68 +287,73 @@ export default function Form() {
 
       <div>{data && JSON.stringify(data)}</div>
 
-      <TableContainer component={Paper}>
-        {mockData && mockData.routes && mockData.routes.length > 0 && (
-          <Table className={classesTable.table} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <StyledTableCell>Nr</StyledTableCell>
-                <StyledTableCell colSpan={2} align="center">
-                  Source <HomeIcon style={{ marginBottom: "-5px" }} />
-                </StyledTableCell>
-                <StyledTableCell colSpan={2} align="center">
-                  Destination <FlagIcon style={{ marginBottom: "-5px" }} />
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  Duration <TimerIcon style={{ marginBottom: "-5px" }} />
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  Distance{" "}
-                  <LocalShippingIcon style={{ marginBottom: "-5px" }} />
-                </StyledTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {mockData.routes.map((row: IRoute, index: number) => (
-                <TableRow key={row.destination + index}>
-                  <TableCell>{index + 1}.</TableCell>
-                  <TableCell component="th" scope="row">
-                    {/* {data.source} */}
-                    <b>Longitude:</b>
-                    <br />
-                    <b>Latitude:</b>
-                  </TableCell>
-                  <TableCell>
-                    {mockData.source.split(",")[0]}
-                    <br />
-                    {mockData.source.split(",")[1]}
-                  </TableCell>
-                  <TableCell>
-                    <b>Longitude:</b>
-                    <br />
-                    <b>Latitude:</b>
-                  </TableCell>
-                  <TableCell>
-                    {row.destination.split(",")[0]}
-                    <br />
-                    {row.destination.split(",")[1]}
-                  </TableCell>
-                  <TableCell align="center">
-                    {row.duration} seconds
-                    <br />
-                    {secondsToMinutes(row.duration)}
-                  </TableCell>
-                  <TableCell align="center">
-                    {row.distance} meters
-                    <br />
-                    {metersToKm(row.distance)}
-                  </TableCell>
+      {/* if request is loading -> show spinner */}
+      {loading ? (
+        <CircularProgress />
+      ) : (
+        <TableContainer component={Paper}>
+          {mockData && mockData.routes && mockData.routes.length > 0 && (
+            <Table className={classesTable.table} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <StyledTableCell>Nr</StyledTableCell>
+                  <StyledTableCell colSpan={2} align="center">
+                    Source <HomeIcon style={{ marginBottom: "-5px" }} />
+                  </StyledTableCell>
+                  <StyledTableCell colSpan={2} align="center">
+                    Destination <FlagIcon style={{ marginBottom: "-5px" }} />
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    Duration <TimerIcon style={{ marginBottom: "-5px" }} />
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    Distance{" "}
+                    <LocalShippingIcon style={{ marginBottom: "-5px" }} />
+                  </StyledTableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        )}
-      </TableContainer>
+              </TableHead>
+              <TableBody>
+                {mockData.routes.map((row: IRoute, index: number) => (
+                  <TableRow key={row.destination + index}>
+                    <TableCell>{index + 1}.</TableCell>
+                    <TableCell component="th" scope="row">
+                      {/* {data.source} */}
+                      <b>Longitude:</b>
+                      <br />
+                      <b>Latitude:</b>
+                    </TableCell>
+                    <TableCell>
+                      {mockData.source.split(",")[0]}
+                      <br />
+                      {mockData.source.split(",")[1]}
+                    </TableCell>
+                    <TableCell>
+                      <b>Longitude:</b>
+                      <br />
+                      <b>Latitude:</b>
+                    </TableCell>
+                    <TableCell>
+                      {row.destination.split(",")[0]}
+                      <br />
+                      {row.destination.split(",")[1]}
+                    </TableCell>
+                    <TableCell align="center">
+                      {row.duration} seconds
+                      <br />
+                      {secondsToMinutes(row.duration)}
+                    </TableCell>
+                    <TableCell align="center">
+                      {row.distance} meters
+                      <br />
+                      {metersToKm(row.distance)}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
+        </TableContainer>
+      )}
     </div>
   );
 }

@@ -1,8 +1,39 @@
-# Getting Started with Create React App
+# Route Finder with Create React App
+
+The Route Finder is the Front End part for the Back End part written in Golang.
+The project help users to get information about the source and destination(s) points in form of latitude and longitude and recevice data about duration and distance between those.
+The route resolution by geographical coordinates is done implemented in the Back End side by consuming the **[Open Source Routing Machine](http://project-osrm.org/)** API.
+User can also search for coordinates by the name location. This part is fully implemented in the Front End side by consuming the **[HERE Geocoding & Search](https://developer.here.com/products/geocoding-and-search)** API.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+### Prerequisites:
+
+- [NodeJS](https://nodejs.org/en/)
+- [Yarn](https://yarnpkg.com/)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop) (if you want to run the application in a docker container)
+
+## Clone the repository on your computer
+
+```bash
+git clone https://github.com/ioanzicu/route-finder-front-end.git
+```
+
+## Install dependencies:
+
+Navigate into the project folder
+
+```bash
+cd route-finder-react-front-end
+```
+
+To install the dependencies run:
+
+```bash
+yarn
+```
+
+## Start the app
 
 In the project directory, you can run:
 
@@ -14,30 +45,61 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `yarn test`
+## Run the Application in the Docker Container
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Navigate into the project folder
 
-### `yarn build`
+```bash
+cd route-finder-react-front-end
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **Build the docker image**
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+docker build -t route-finder-front-end .
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Instead of `route-finder-front-end`, you can use your custom name for the docker image.
 
-### `yarn eject`
+**Note!!!** For Linux environment it can be require to use `sudo`.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- **Run the docker container**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+docker run -p -it [host port]:[exposed container port] route-finder-front-end
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Example:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```bash
+docker run -it -p 3000:3000 route-finder-front-end
+```
+
+`it` - flag for interactive processes (like a shell)
+
+To run the container in the detached mode use `-d` flag
+
+```bash
+docker run -d -it -p 3000:3000 route-finder-front-end
+```
+
+- **Stop the container**
+
+```bash
+docker ps
+```
+
+Find the image `CONTAINER ID` (looks like `6fe5657a5654`).
+
+```bash
+docker stop [CONTAINER ID]
+```
+
+- **Remove the image**
+
+```bash
+docker rm [CONTAINER ID]
+```
 
 ## Learn More
 

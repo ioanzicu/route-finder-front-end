@@ -45,7 +45,7 @@ function App() {
               color="inherit"
               aria-label="menu"
             >
-              <LocalShippingIcon fontSize="large" />
+              <Link to='/'><LocalShippingIcon fontSize="large" /></Link>
             </IconButton>
             <Typography variant="h4" className={navBarClasses.title}>
               Route Finder

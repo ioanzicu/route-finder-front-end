@@ -26,16 +26,16 @@ import {
 import { metersToKm, secondsToMinutes } from "../utils/Utils";
 import { IRoute, IData, InputList } from "../types/CustomTypes";
 
-const mockData = {
-  source: "13.38886,52.517037",
-  routes: [
-    {
-      destination: "13.397634,52.529407",
-      duration: "251.5",
-      distance: "1884.8",
-    },
-  ],
-};
+// const mockData = {
+//   source: "13.38886,52.517037",
+//   routes: [
+//     {
+//       destination: "13.397634,52.529407",
+//       duration: "251.5",
+//       distance: "1884.8",
+//     },
+//   ],
+// };
 
 export default function Form() {
   const classesForm = useFormStyles();
@@ -179,7 +179,7 @@ export default function Form() {
         onSubmit={handleSubmit}
         autoComplete="off"
       >
-        {/* // if an error occur -> show alert message */}
+        {/* if an error occur -> show alert message */}
         {fetchError && (
           <Alert severity="error">
             <AlertTitle>
@@ -285,14 +285,12 @@ export default function Form() {
 
       <br />
 
-      <div>{data && JSON.stringify(data)}</div>
-
       {/* if request is loading -> show spinner */}
       {loading ? (
         <CircularProgress />
       ) : (
         <TableContainer component={Paper}>
-          {mockData && mockData.routes && mockData.routes.length > 0 && (
+          {data && data.routes && data.routes.length > 0 && (
             <Table className={classesTable.table} aria-label="simple table">
               <TableHead>
                 <TableRow>
@@ -313,19 +311,18 @@ export default function Form() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {mockData.routes.map((row: IRoute, index: number) => (
+                {data.routes.map((row: IRoute, index: number) => (
                   <TableRow key={row.destination + index}>
                     <TableCell>{index + 1}.</TableCell>
                     <TableCell component="th" scope="row">
-                      {/* {data.source} */}
                       <b>Longitude:</b>
                       <br />
                       <b>Latitude:</b>
                     </TableCell>
                     <TableCell>
-                      {mockData.source.split(",")[0]}
+                      {data.source.split(",")[0]}
                       <br />
-                      {mockData.source.split(",")[1]}
+                      {data.source.split(",")[1]}
                     </TableCell>
                     <TableCell>
                       <b>Longitude:</b>

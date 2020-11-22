@@ -1,24 +1,25 @@
-# Reference: https://docs.docker.com/engine/reference/builder/#:~:text=A%20Dockerfile%20is%20a%20text,can%20use%20in%20a%20Dockerfile%20.
+# Dockerfile References: https://docs.docker.com/engine/reference/builder/
 
 # pull official base image
 FROM node:12.19.0-alpine
 
 # set working directory
-WORKDIR /app
+WORKDIR /srv/app/route-finder-client
 
 # add `/app/node_modules/.bin` to $PATH
 ENV PATH /app/node_modules/.bin:$PATH
 
+LABEL maintainer="Ioan Zîcu <ioan.zicu94@gmail.com>"
+
 # install app dependencies
-COPY package.json yarn.lock ./ 
+COPY package.json /srv/app/route-finder-client 
+COPY yarn.lock /srv/app/route-finder-client
 
 RUN yarn
 
 # add app
-COPY . ./
+COPY . /srv/app/route-finder-client
 RUN yarn build
-
-
 
 EXPOSE 3000
 

@@ -13,18 +13,12 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - [Yarn](https://yarnpkg.com/)
 - [Docker Desktop](https://www.docker.com/products/docker-desktop) (if you want to run the application in a docker container)
 
-## Clone the repository on your computer
-
-```bash
-git clone https://github.com/ioanzicu/route-finder-front-end.git
-```
-
 ## Install dependencies:
 
 Navigate into the project folder
 
 ```bash
-cd route-finder-react-front-end
+cd client
 ```
 
 To install the dependencies run:
@@ -50,7 +44,7 @@ You will also see any lint errors in the console.
 Navigate into the project folder
 
 ```bash
-cd route-finder-react-front-end
+cd client
 ```
 
 - **Build the docker image**

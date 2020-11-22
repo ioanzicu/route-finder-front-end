@@ -33,7 +33,7 @@ const SearchByLocation = () => {
   //   };
 
   return (
-    <div style={{ padding: "1rem" }}>
+    <div style={{ padding: "3rem", marginBottom: "2rem" }}>
       <InputLocation setCoodinates={setCoodinates} />
       {coordinatesData && (
         <LocationDataTable coordinatesData={coordinatesData} />

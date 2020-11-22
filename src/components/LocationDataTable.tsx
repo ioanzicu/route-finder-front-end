@@ -14,6 +14,7 @@ import { ICoordinates } from "../types/CustomTypes";
 const useTableStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
+      paddingTop: "2rem",
       display: "flex",
       flexWrap: "wrap",
       "& > *": {

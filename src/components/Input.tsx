@@ -28,6 +28,11 @@ const InputLocation = memo((_props: any) => {
       const json = await data.json();
       // success
       if (json) {
+        // no response
+        if (json.Response.View.length === 0) {
+          throw new Error("Unknown City / Vilage");
+        }
+
         setLoading(false);
         setResults(json);
       }
@@ -88,19 +93,27 @@ const InputLocation = memo((_props: any) => {
 
   // if request is loading -> show spinner
   if (loading) return <CircularProgress />;
-  // if an error occur -> show alert message
+
+  // Remove error Alert after 5 seconds
   if (fetchError) {
-    return (
-      <Alert severity="error">
-        <AlertTitle>Error</AlertTitle>
-        Something went wrong: <strong>{fetchError}.</strong>
-      </Alert>
-    );
+    setTimeout(() => {
+      setFetchError("");
+      console.log("Timeout: Remove the error");
+    }, 5000);
   }
 
   return (
     <FormControl>
       <form onSubmit={handleSubmit}>
+       <div style={{ marginBottom: "2rem" }}>
+       {fetchError && <Alert severity="error">
+          <AlertTitle>
+            <strong style={{ fontSize: "1rem", textAlign: "center" }}>
+              Error:
+            </strong></AlertTitle>
+          Something went wrong: <strong>{fetchError}.</strong>
+        </Alert>}
+       </div>
         <TextField
           type="text"
           required
